@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% load custom_tags %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand"
+      {% if user.is_authenticated %}
+      href="{% url 'index' %}"
+      {% else %}
+      href="{% url 'index' %}"
+      {% endif %}>
+      <i  class="fas fa-meteor fa-bounce"></i>VLactea</a>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <form class="d-flex" method="GET" action="{% url 'profile-search' %}">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="
+            basic-addon1" name="query" value="{{ request.GET.query }}">
+            <button class="remove-default-btn" type="submit" style="border: none;"><i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+        {% if user.is_authenticated %}
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" role="button" aria-expanded="false"
+          ><i class="fas fa-user"></i></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'profile' request.user.profile.pk %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+          </ul>
+        </div>
+        <div class="nav-item inbox-icon-container" style="max-width: 15px;">
+          <a href="{% url 'inbox' %}" class="inbox-icon"><i class="far fa-paper-plane"  style=" color: #333;  transition: 0.5s;"></i></a>
+        <div class="nav-item">
+          {% show_notifications %}
+        {% endif %}
+        </div>
+      </div>
+    </div>
+</nav> 
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-sm-5 text-center">
+            <h1 class="display-3">
+                Connect With Your Friends!
+            </h1>
+            <p class="mt-3 lead">Follow people who interest you, stay up to date on the latest news and join conversations with your friends!</p>
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{% url 'account_login' %}" class="btn btn-light mr-2">Log In</a>
+                <a href="{% url 'account_signup' %}" class="btn btn-dark" style="background-color: #009dff; border: none;">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+      <div class="col-md-10 col-sm-5 text-center">
+          <h1 class="display-3">
+              About us!
+          </h1>
+          <p class="mt-3 lead">We are limited social media platform, where the aim is to publish various materials related to Articles, Photos and Communication including Science and Technology. If you violate the privacy policy, the administration will act with due care!</p>
+      </div>
+  </div>
+</div>
+
+
+{% endblock content %}
